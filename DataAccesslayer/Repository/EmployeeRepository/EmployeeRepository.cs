@@ -27,10 +27,11 @@ namespace DataAccesslayer.Repository.EmployeeRepository
                 List<Employee> newEmployees = new List<Employee>();
 
                 // getting record from DB
-                // we are getting ALL records from DB, which is not good practice
+                // we are getting ALL records from DB
                 var employees = DbContext.Employees.ToList();
                 foreach (var csvRecord in csvFileRecords)
                 {
+                    if (csvRecord is null) continue;
                     //when all employees are in memory in the list, then, why we are calling DB every time
                     var existingEmployee = DbContext.Employees.Where(x => x.EmployeeId == csvRecord.EmployeeId).SingleOrDefault(); // singleordefault
                     if (existingEmployee != null)
@@ -50,6 +51,7 @@ namespace DataAccesslayer.Repository.EmployeeRepository
                 }
                 foreach (var employee in employees)
                 {
+                    if (employee is null) continue;
                     if (!csvFileRecords.Any(x => x.EmployeeId == employee.EmployeeId))
                     {
                         DbContext.Employees.RemoveRange(employee); // RemoveRange
