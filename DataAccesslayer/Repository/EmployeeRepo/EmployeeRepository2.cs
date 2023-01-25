@@ -95,9 +95,6 @@ namespace DataAccesslayer.Repository.EmployeeRepo
             };
             return csvEmployee;
         }
-        public void sum()
-        {
-
-        }
+        
     }
 }
